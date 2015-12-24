@@ -1,0 +1,24 @@
+{
+  "name": "bucks",
+  "version": "0.1.0",
+  "description": "JavaScript/TypeScript CSS selector library",
+  "main": "bucks.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArtemAvramenko/bucks.js.git"
+  },
+  "keywords": [
+    "css",
+    "selector",
+    "typescript"
+  ],
+  "author": "Artem Avramenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ArtemAvramenko/bucks.js/issues"
+  },
+  "homepage": "https://github.com/ArtemAvramenko/bucks.js#readme"
+}
