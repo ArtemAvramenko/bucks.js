@@ -1,4 +1,4 @@
-declare module Bucks {
+declare module Phased {
 
     export interface SingleMethods<T extends Element> {
         <T extends Element>(selector: string): SingleResult<T>;
@@ -33,4 +33,4 @@ declare module Bucks {
     }
 }
 
-declare var $$: Bucks.Static;
+declare var $$: Phased.Static;

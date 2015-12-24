@@ -9,36 +9,36 @@
         this.$$ = factory();
     }
 })(function () {
-    function createBucks(elements, isList) {
-        var bucks = (function (selector) {
+    function createResult(elements, isList) {
+        var result = (function (selector) {
             if (typeof selector === 'string') {
-                return bucks.find(selector);
+                return result.find(selector);
             }
             if (selector instanceof Array) {
-                return createBucks(selector, true);
+                return createResult(selector, true);
             }
-            return createBucks([selector], false);
+            return createResult([selector], false);
         });
         if (elements && (elements.length == 0 || !elements[0])) {
             elements = undefined;
         }
         if (isList) {
-            bucks.found = elements;
-            bucks.maybe = elements || [];
+            result.found = elements;
+            result.maybe = elements || [];
         }
         else {
             if (elements) {
                 var found = elements[0];
             }
-            bucks.found = found;
-            bucks.maybe = found || {};
+            result.found = found;
+            result.maybe = found || {};
         }
         elements = elements || [];
-        bucks.all = createBucksList(elements);
-        bucks.find = function (selector) {
+        result.all = createListMethods(elements);
+        result.find = function (selector) {
             return find(function (el) { return el.querySelector(selector); });
         };
-        bucks.closest = function (selector) {
+        result.closest = function (selector) {
             var results = $$.all(selector).found;
             return find(function (el) {
                 if (results) {
@@ -51,20 +51,20 @@
                 }
             });
         };
-        bucks.visible = function () {
+        result.visible = function () {
             return find(function (el) { return isVisible(el); });
         };
-        bucks.withAttribute = function (attributeName, pattern) {
+        result.withAttribute = function (attributeName, pattern) {
             return find(function (el) { return isAttributeMatches(el, attributeName, pattern); });
         };
-        bucks.getAttribute = function (attributeName) {
+        result.getAttribute = function (attributeName) {
             var el = elements[0];
             if (el) {
                 return el.getAttribute(attributeName) || '';
             }
             return '';
         };
-        return bucks;
+        return result;
         function find(searcher) {
             for (var _i = 0; _i < elements.length; _i++) {
                 var el = elements[_i];
@@ -73,25 +73,25 @@
                     if (res === true) {
                         res = el;
                     }
-                    return createBucks([res]);
+                    return createResult([res]);
                 }
             }
             ;
-            return createBucks();
+            return createResult();
         }
     }
-    function createBucksList(elements) {
-        var bucks = (function (selector) { return bucks.find(selector); });
-        bucks.find = function (selector) {
+    function createListMethods(elements) {
+        var listMethods = (function (selector) { return listMethods.find(selector); });
+        listMethods.find = function (selector) {
             return find(function (el) { return el.querySelectorAll(selector); });
         };
-        bucks.visible = function () {
+        listMethods.visible = function () {
             return find(function (el) { return isVisible(el); });
         };
-        bucks.withAttribute = function (attributeName, pattern) {
+        listMethods.withAttribute = function (attributeName, pattern) {
             return find(function (el) { return isAttributeMatches(el, attributeName, pattern); });
         };
-        return bucks;
+        return listMethods;
         function find(searcher) {
             var all = [];
             for (var _i = 0; _i < elements.length; _i++) {
@@ -108,7 +108,7 @@
                 }
             }
             ;
-            return createBucks(all, true);
+            return createResult(all, true);
         }
     }
     function isVisible(el) {
@@ -130,6 +130,6 @@
     function isAttributeMatches(el, attributeName, pattern) {
         return pattern.test(el.getAttribute(attributeName));
     }
-    var $$ = createBucks([document]);
+    var $$ = createResult([document]);
     return $$;
 });

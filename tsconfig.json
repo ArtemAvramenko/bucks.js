@@ -18,8 +18,8 @@
         "!node_modules/**"
     ],
     "files": [
-        "bucks.d.ts",
-        "bucks.ts",
+        "phased.d.ts",
+        "phased.ts",
         "test.ts"
     ],
     "exclude": []

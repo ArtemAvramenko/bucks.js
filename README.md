@@ -1,4 +1,4 @@
-#bucks.js
+#phased.js
 JavaScript/TypeScript CSS selector library.
 
 Code licensed under [MIT License](LICENSE).

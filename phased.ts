@@ -1,11 +1,11 @@
 declare var module: (...modules: any[]) => any;
 
 declare var define: {
-    (dependencies: string[], factory: () => Bucks.Static);
+    (dependencies: string[], factory: () => Phased.Static);
     amd: any;
 }
 
-(function (factory: () => Bucks.Static) {
+(function(factory: () => Phased.Static) {
     if (typeof module === "object" && (<any>module).exports) {
         (<any>module).exports = factory();
     }
@@ -17,16 +17,16 @@ declare var define: {
     }
 })(function() {
 
-    function createBucks(elements?: Element[], isList?: boolean): Bucks.SingleMethods<Element> {
+    function createResult(elements?: Element[], isList?: boolean): Phased.SingleMethods<Element> {
 
-        var bucks = <Bucks.SingleMethods<Element>>(function(selector: string | Element | Element[]): Bucks.SingleMethods<Element> {
+        var result = <Phased.SingleMethods<Element>>(function(selector: string | Element | Element[]): Phased.SingleMethods<Element> {
             if (typeof selector === 'string') {
-                return bucks.find(selector);
+                return result.find(selector);
             }
             if (selector instanceof Array) {
-                return createBucks(selector, true);
+                return createResult(selector, true);
             }
-            return createBucks([<Element>selector], false);
+            return createResult([<Element>selector], false);
         });
 
         if (elements && (elements.length == 0 || !elements[0])) {
@@ -34,25 +34,25 @@ declare var define: {
         }
 
         if (isList) {
-            (<Bucks.ListResult<Element>>bucks).found = elements;
-            (<Bucks.ListResult<Element>>bucks).maybe = elements || [];
+            (<Phased.ListResult<Element>>result).found = elements;
+            (<Phased.ListResult<Element>>result).maybe = elements || [];
         }
         else {
             if (elements) {
                 var found = elements[0];
             }
-            (<Bucks.SingleResult<Element>>bucks).found = found;
-            (<Bucks.SingleResult<Element>>bucks).maybe = found || <Element>{};
+            (<Phased.SingleResult<Element>>result).found = found;
+            (<Phased.SingleResult<Element>>result).maybe = found || <Element>{};
         }
 
         elements = elements || [];
-        bucks.all = createBucksList(elements);
+        result.all = createListMethods(elements);
 
-        bucks.find = (selector: string) => {
+        result.find = (selector: string) => {
             return find(el => el.querySelector(selector));
         }
 
-        bucks.closest = (selector: string) => {
+        result.closest = (selector: string) => {
             var results = $$.all(selector).found;
             return find(el => {
                 if (results) {
@@ -66,15 +66,15 @@ declare var define: {
             });
         }
 
-        bucks.visible = () => {
+        result.visible = () => {
             return find(el => isVisible(el));
         }
 
-        bucks.withAttribute = (attributeName: string, pattern: RegExp) => {
+        result.withAttribute = (attributeName: string, pattern: RegExp) => {
             return find(el => isAttributeMatches(el, attributeName, pattern));
         }
 
-        bucks.getAttribute = (attributeName: string) => {
+        result.getAttribute = (attributeName: string) => {
             var el = elements[0];
             if (el) {
                 return el.getAttribute(attributeName) || '';
@@ -82,7 +82,7 @@ declare var define: {
             return '';
         }
 
-        return bucks;
+        return result;
 
         function find(searcher: (el: Element) => Element | boolean) {
             for (var el of elements) {
@@ -91,30 +91,30 @@ declare var define: {
                     if (res === true) {
                         res = el;
                     }
-                    return <Bucks.SingleResult<Element>>createBucks([<Element>res]);
+                    return <Phased.SingleResult<Element>>createResult([<Element>res]);
                 }
             };
-            return <Bucks.SingleResult<Element>>createBucks();
+            return <Phased.SingleResult<Element>>createResult();
         }
     }
 
-    function createBucksList(elements: Element[]) {
+    function createListMethods(elements: Element[]) {
 
-        var bucks = <Bucks.ListMethods<Element>><any>((selector: string) => bucks.find(selector));
+        var listMethods = <Phased.ListMethods<Element>><any>((selector: string) => listMethods.find(selector));
 
-        bucks.find = (selector: string) => {
+        listMethods.find = (selector: string) => {
             return find(el => el.querySelectorAll(selector));
         }
 
-        bucks.visible = () => {
+        listMethods.visible = () => {
             return find(el => isVisible(el));
         }
 
-        bucks.withAttribute = (attributeName: string, pattern: RegExp) => {
+        listMethods.withAttribute = (attributeName: string, pattern: RegExp) => {
             return find(el => isAttributeMatches(el, attributeName, pattern));
         }
 
-        return bucks;
+        return listMethods;
 
         function find(searcher: (el: Element) => NodeListOf<Element> | boolean) {
             var all = <Element[]>[];
@@ -129,7 +129,7 @@ declare var define: {
                     }
                 }
             };
-            return <Bucks.ListResult<Element>>createBucks(all, true);
+            return <Phased.ListResult<Element>>createResult(all, true);
         }
     }
 
@@ -154,6 +154,6 @@ declare var define: {
         return pattern.test(el.getAttribute(attributeName))
     }
 
-    var $$ = <Bucks.Static>createBucks([<Element><Node>document])
+    var $$ = <Phased.Static>createResult([<Element><Node>document])
     return $$;
-  });
+});
