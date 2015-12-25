@@ -1,6 +1,6 @@
 {
     "name": "phased",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "JavaScript/TypeScript CSS selector library",
     "main": "phased.js",
     "scripts": {

@@ -1,20 +1,24 @@
 declare module Phased {
 
-    export interface SingleMethods<T extends Element> {
+    export interface SingleMethods<TFound extends Element> {
         <T extends Element>(selector: string): SingleResult<T>;
-        find<T extends Element>(selector: string | ((el: Element) => Element | boolean)): SingleResult<T>;
-        visible(): SingleResult<T>;
-        withAttribute(attributeName: string, regExp: RegExp): SingleResult<T>;
+        find<T extends Element>(selector: string): SingleResult<T>;
+        find<T extends Element>(searcher: (el: TFound) => T): SingleResult<T>;
+        find(searcher: (el: TFound) => boolean): SingleResult<TFound>;
+        visible(): SingleResult<TFound>;
+        withAttribute(attributeName: string, regExp: RegExp): SingleResult<TFound>;
         getAttribute(attributeName: string): string;
         closest<T extends Element>(selector: string): SingleResult<T>;
-        all: ListMethods<T>;
+        all: ListMethods<TFound>;
     }
 
-    export interface ListMethods<T extends Element> {
+    export interface ListMethods<TFound extends Element> {
         <T extends Element>(selector: string): ListResult<T>;
-        find<T extends Element>(selector: string | ((el: Element) => {length: number, [index: number]: T} | boolean)): ListResult<T>;
-        visible(): ListResult<T>;
-        withAttribute(attributeName: string, regExp: RegExp): ListResult<T>;
+        find<T extends Element>(selector: string): ListResult<T>;
+        find<T extends Element>(searcher: (el: TFound) => ArrayLike<T>): ListResult<T>;
+        find(searcher: (el: TFound) => boolean): ListResult<TFound>;
+        visible(): ListResult<TFound>;
+        withAttribute(attributeName: string, regExp: RegExp): ListResult<TFound>;
     }
 
     export interface SingleResult<T extends Element> extends SingleMethods<T> {

@@ -73,8 +73,8 @@
         };
         return result;
         function find(searcher) {
-            for (var _i = 0, elements_1 = elements; _i < elements_1.length; _i++) {
-                var el = elements_1[_i];
+            for (var _i = 0; _i < elements.length; _i++) {
+                var el = elements[_i];
                 var res = searcher(el);
                 if (res) {
                     if (res === true) {
@@ -108,8 +108,8 @@
         return listMethods;
         function find(searcher) {
             var all = [];
-            for (var _i = 0, elements_2 = elements; _i < elements_2.length; _i++) {
-                var el = elements_2[_i];
+            for (var _i = 0; _i < elements.length; _i++) {
+                var el = elements[_i];
                 var res = searcher(el);
                 if (res === true) {
                     all.push(el);

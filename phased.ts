@@ -54,7 +54,7 @@ declare var define: {
                 searcher = selector;
             }
             else {
-                searcher = el => el.querySelector(selector);
+                searcher = el => el.querySelector(<string>selector);
             }
             return find(searcher);
         }
@@ -114,7 +114,7 @@ declare var define: {
             if (typeof selector === 'function') {
                 searcher = selector;
             } else {
-                searcher = el => el.querySelectorAll(selector);
+                searcher = el => el.querySelectorAll(<string>selector);
             }
             return find(searcher);
         }
@@ -129,14 +129,14 @@ declare var define: {
 
         return listMethods;
 
-        function find(searcher: (el: Element) => { length: number, [index: number]: Element } | boolean) {
+        function find(searcher: (el: Element) => ArrayLike<Element> | boolean) {
             var all = <Element[]>[];
             for (var el of elements) {
                 var res = searcher(el);
                 if (res === true) {
                     all.push(el);
                 } else if (res) {
-                    var len = (<Element[]>res).length;
+                    var len = (<ArrayLike<Element>>res).length;
                     for (var i = 0; i < len; i++) {
                         all.push(res[i]);
                     }
