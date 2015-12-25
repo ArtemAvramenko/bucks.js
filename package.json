@@ -1,24 +1,28 @@
 {
-  "name": "phased",
-  "version": "0.1.0",
-  "description": "JavaScript/TypeScript CSS selector library",
-  "main": "phased.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ArtemAvramenko/phased.js.git"
-  },
-  "keywords": [
-    "css",
-    "selector",
-    "typescript"
-  ],
-  "author": "Artem Avramenko",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ArtemAvramenko/phased.js/issues"
-  },
-  "homepage": "https://github.com/ArtemAvramenko/phased.js#readme"
+    "name": "phased",
+    "version": "0.1.1",
+    "description": "JavaScript/TypeScript CSS selector library",
+    "main": "phased.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ArtemAvramenko/phased.js.git"
+    },
+    "keywords": [
+        "css",
+        "selector",
+        "typescript"
+    ],
+    "author": "Artem Avramenko",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ArtemAvramenko/phased.js/issues"
+    },
+    "homepage": "https://github.com/ArtemAvramenko/phased.js#readme",
+    "files": [
+        "phased.js",
+        "phased.d.ts"
+    ]
 }

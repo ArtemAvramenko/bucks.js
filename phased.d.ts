@@ -2,7 +2,7 @@ declare module Phased {
 
     export interface SingleMethods<T extends Element> {
         <T extends Element>(selector: string): SingleResult<T>;
-        find<T extends Element>(selector: string): SingleResult<T>;
+        find<T extends Element>(selector: string | ((el: Element) => Element | boolean)): SingleResult<T>;
         visible(): SingleResult<T>;
         withAttribute(attributeName: string, regExp: RegExp): SingleResult<T>;
         getAttribute(attributeName: string): string;
@@ -12,7 +12,7 @@ declare module Phased {
 
     export interface ListMethods<T extends Element> {
         <T extends Element>(selector: string): ListResult<T>;
-        find<T extends Element>(selector: string): ListResult<T>;
+        find<T extends Element>(selector: string | ((el: Element) => {length: number, [index: number]: T} | boolean)): ListResult<T>;
         visible(): ListResult<T>;
         withAttribute(attributeName: string, regExp: RegExp): ListResult<T>;
     }

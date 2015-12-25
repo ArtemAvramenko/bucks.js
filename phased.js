@@ -36,7 +36,14 @@
         elements = elements || [];
         result.all = createListMethods(elements);
         result.find = function (selector) {
-            return find(function (el) { return el.querySelector(selector); });
+            var searcher;
+            if (typeof selector === 'function') {
+                searcher = selector;
+            }
+            else {
+                searcher = function (el) { return el.querySelector(selector); };
+            }
+            return find(searcher);
         };
         result.closest = function (selector) {
             var results = $$.all(selector).found;
@@ -66,8 +73,8 @@
         };
         return result;
         function find(searcher) {
-            for (var _i = 0; _i < elements.length; _i++) {
-                var el = elements[_i];
+            for (var _i = 0, elements_1 = elements; _i < elements_1.length; _i++) {
+                var el = elements_1[_i];
                 var res = searcher(el);
                 if (res) {
                     if (res === true) {
@@ -83,7 +90,14 @@
     function createListMethods(elements) {
         var listMethods = (function (selector) { return listMethods.find(selector); });
         listMethods.find = function (selector) {
-            return find(function (el) { return el.querySelectorAll(selector); });
+            var searcher;
+            if (typeof selector === 'function') {
+                searcher = selector;
+            }
+            else {
+                searcher = function (el) { return el.querySelectorAll(selector); };
+            }
+            return find(searcher);
         };
         listMethods.visible = function () {
             return find(function (el) { return isVisible(el); });
@@ -94,8 +108,8 @@
         return listMethods;
         function find(searcher) {
             var all = [];
-            for (var _i = 0; _i < elements.length; _i++) {
-                var el = elements[_i];
+            for (var _i = 0, elements_2 = elements; _i < elements_2.length; _i++) {
+                var el = elements_2[_i];
                 var res = searcher(el);
                 if (res === true) {
                     all.push(el);

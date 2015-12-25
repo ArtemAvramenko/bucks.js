@@ -48,8 +48,15 @@ declare var define: {
         elements = elements || [];
         result.all = createListMethods(elements);
 
-        result.find = (selector: string) => {
-            return find(el => el.querySelector(selector));
+        result.find = (selector: string | ((el: Element) => any)) => {
+            var searcher: (el: Element) => any;
+            if (typeof selector === 'function') {
+                searcher = selector;
+            }
+            else {
+                searcher = el => el.querySelector(selector);
+            }
+            return find(searcher);
         }
 
         result.closest = (selector: string) => {
@@ -102,8 +109,14 @@ declare var define: {
 
         var listMethods = <Phased.ListMethods<Element>><any>((selector: string) => listMethods.find(selector));
 
-        listMethods.find = (selector: string) => {
-            return find(el => el.querySelectorAll(selector));
+        listMethods.find = (selector: string | ((el: Element) => any)) => {
+            var searcher: (el: Element) => any;
+            if (typeof selector === 'function') {
+                searcher = selector;
+            } else {
+                searcher = el => el.querySelectorAll(selector);
+            }
+            return find(searcher);
         }
 
         listMethods.visible = () => {
@@ -116,14 +129,14 @@ declare var define: {
 
         return listMethods;
 
-        function find(searcher: (el: Element) => NodeListOf<Element> | boolean) {
+        function find(searcher: (el: Element) => { length: number, [index: number]: Element } | boolean) {
             var all = <Element[]>[];
             for (var el of elements) {
                 var res = searcher(el);
                 if (res === true) {
                     all.push(el);
                 } else if (res) {
-                    var len = (<NodeListOf<Element>>res).length;
+                    var len = (<Element[]>res).length;
                     for (var i = 0; i < len; i++) {
                         all.push(res[i]);
                     }
